@@ -189,7 +189,9 @@ export function engineSceneFor(projectId: string, scene: any, master: Master, fo
     actors: sh.actors.map((a: any) => {
       const c = chars[a.id];
       const colors = (c?.colors ?? []).filter((x: string) => /^#[0-9a-f]{3,8}$/i.test(x));
-      return { ...a, kind: a.id === "zumbi" || /zumbi/.test(c?.role ?? "") ? "zumbi" : "pessoa", colors, emotion: "" };
+      // 9:16: recompõe horizontalmente (aproxima personagens do centro) em vez de cortar o centro do 16:9
+      const x = vertical ? 0.5 + (a.x - 0.5) * 0.55 : a.x;
+      return { ...a, x, kind: a.id === "zumbi" || /zumbi/.test(c?.role ?? "") ? "zumbi" : "pessoa", colors, emotion: "" };
     }),
     layers: mode === "codigo" ? [] : [...layerFor("fundo"), ...(mode === "camadas" ? layerFor("personagem") : [])],
   }));

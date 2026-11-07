@@ -3,7 +3,7 @@ import path from "node:path";
 import { db, j, now, uid } from "../db.js";
 import { projectDir } from "../paths.js";
 import { engine, applyPronunciation, translateRecipe, type RecipePart } from "../providers/tts.js";
-import { decodePcm, ffprobe, measureLoudness, run, sha256File, UserError, fmtTime } from "../util.js";
+import { decodePcm, ffprobe, measureLoudness, run, sha256, sha256File, UserError, fmtTime } from "../util.js";
 import { latestMaster, markDependentsStale, type Master } from "./audio-gate.js";
 import type { ScriptDoc } from "../contracts.js";
 
@@ -89,7 +89,7 @@ export async function sampleVoice(projectId: string, setting: VoiceSetting, text
   return { ...r, setting };
 }
 
-export async function synthSegment(projectId: string, segmentId: string, override?: VoiceSetting) {
+export async function synthSegment(projectId: string, segmentId: string, override?: VoiceSetting, force = false) {
   const s = db().prepare("SELECT * FROM speech_segments WHERE id=? AND project_id=?").get(segmentId, projectId) as any;
   if (!s) throw new UserError("Trecho não encontrado", 404);
   const cast = voiceCast(projectId);
@@ -98,7 +98,22 @@ export async function synthSegment(projectId: string, segmentId: string, overrid
   fs.mkdirSync(dir, { recursive: true });
   const out = path.join(dir, `${String(s.idx).padStart(4, "0")}_${Date.now()}.wav`);
   const dirn = j<any>(s.direction_json, {});
+  // Cache por conteúdo: mesmo texto falado + mesma configuração de voz + mesma emoção ⇒ reaproveita o take
+  // (regenera só os trechos que mudaram). "Refazer trecho" força um take novo.
+  const cacheKey = sha256(JSON.stringify([applyPronunciation(s.text, pronunciations(projectId)), setting, dirn.emotion ?? null]));
+  const cacheFile = path.join(projectDir(projectId), "voz", "cache", `${cacheKey}.wav`);
+  if (!force && fs.existsSync(cacheFile)) {
+    fs.copyFileSync(cacheFile, out);
+    const info = await ffprobe(out);
+    const id = uid("take_");
+    db().prepare("INSERT INTO voice_tracks(id,segment_id,path,sha256,duration,engine,request_json,created_at) VALUES(?,?,?,?,?,?,?,?)")
+      .run(id, segmentId, out, await sha256File(out), info.duration, setting.engine, JSON.stringify({ setting, reusedFromCache: cacheKey }), now());
+    if (!s.chosen_take_id) db().prepare("UPDATE speech_segments SET chosen_take_id=?, status='gerado' WHERE id=?").run(id, segmentId);
+    return { takeId: id, path: out, duration: info.duration, sampleRate: 0, request: { setting }, engine: setting.engine, controlsApplied: {}, cached: true };
+  }
   const r = await speakWith(setting, s.text, out, projectId, dirn.emotion);
+  fs.mkdirSync(path.dirname(cacheFile), { recursive: true });
+  fs.copyFileSync(out, cacheFile);
   const id = uid("take_");
   db().prepare("INSERT INTO voice_tracks(id,segment_id,path,sha256,duration,engine,request_json,created_at) VALUES(?,?,?,?,?,?,?,?)")
     .run(id, segmentId, out, await sha256File(out), r.duration, r.engine, JSON.stringify({ ...r.request, setting, controlsApplied: r.controlsApplied }), now());

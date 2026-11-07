@@ -360,7 +360,10 @@
     const cue = (S.subtitles || []).find((c) => t >= c.t0 && t < c.t1); if (!cue) return;
     const size = Math.round((V ? 54 : 44) * U);
     ctx.save(); ctx.font = FONT_SUB.replace("{s}", size); ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
-    const lines = cue.text.split("\n"); const safe = V ? (S.safeArea?.bottom ?? 0.22) : 0.08;
+    // quebra por LARGURA medida (área segura de 86% da largura), máx. 3 linhas
+    const maxW = W * 0.86, lines = [];
+    for (const para of cue.text.split("\n")) { let cur = ""; for (const w of para.split(/\s+/)) { const t2 = cur ? cur + " " + w : w; if (ctx.measureText(t2).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t2; } if (cur) lines.push(cur); }
+    const safe = V ? (S.safeArea?.bottom ?? 0.22) : 0.08;
     lines.forEach((ln, i) => { const y = H * (1 - safe) - (lines.length - 1 - i) * size * 1.25; ctx.lineWidth = 8 * U; ctx.strokeStyle = "rgba(0,0,0,.85)"; ctx.lineJoin = "round"; ctx.strokeText(ln, W / 2, y); ctx.fillStyle = "#fff"; ctx.fillText(ln, W / 2, y); });
     ctx.restore();
   }

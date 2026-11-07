@@ -56,6 +56,9 @@ export function createDerivedShort(parentId: string, o: { segmentIds: string[]; 
     db().prepare("INSERT INTO projects(id,title,kind,parent_id,settings_json,style_lock_json,bible_json,status,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?)")
       .run(id, shortDoc.title, "short", parentId, JSON.stringify(settings), parent.style_lock_json, JSON.stringify({ ...parent.bible, shortKind: o.kind, destination: o.destination ?? null, sourceMaster: { id: m.id, sha256: m.sha256 } }), "rascunho", now(), now());
     db().prepare("INSERT INTO script_versions(id,project_id,version,origin,model,data_json,text,created_at) VALUES(?,?,1,'manual','derivado do episódio',?,?,?)").run(uid("scr_"), id, JSON.stringify(shortDoc), shortDoc.scenes.map((s) => s.lines.map((l) => l.text).join(" ")).join("\n"), now());
+    // continuidade: fichas de personagens (IDs estáveis) copiadas do episódio
+    for (const c of db().prepare("SELECT * FROM characters WHERE project_id=?").all(parentId) as any[])
+      db().prepare("INSERT INTO characters(id,project_id,series_id,stable_key,data_json,ref_asset_id,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?)").run(uid("chr_"), id, c.series_id, c.stable_key, c.data_json, c.ref_asset_id, now(), now());
     let idx = 0;
     for (const sc of shortDoc.scenes) for (const l of sc.lines) {
       const src = segs.find((s) => s.text === l.text && s.scene_key === sc.key);

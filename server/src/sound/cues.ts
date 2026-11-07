@@ -57,13 +57,29 @@ export function momentsFrom(scenes: any[]): Moment[] {
       if (sh.camera.move === "tremor") m.push({ t: sh.t0 + 0.05, sceneKey: sc.stable_key, event: "impacto/susto", fn: "impacto que sustenta o tremor de câmera", category: "impact", sync: "ataque", gainDb: -12 });
     });
   }
-  // garante pelo menos um uso de cada whoosh do kit (as três funções pedidas), em momentos reais
-  const firstScene = scenes[1] ?? scenes[0];
-  if (!m.some((x) => x.category === "whoosh-passagem") && firstScene) m.push({ t: firstScene.t0, sceneKey: firstScene.stable_key, event: "primeira virada da história", fn: "passagem rápida", category: "whoosh-passagem", sync: "pico", gainDb: -10 });
-  const mid = scenes[Math.floor(scenes.length / 2)];
-  if (!m.some((x) => x.category === "whoosh-pesada") && mid) m.push({ t: mid.t0, sceneKey: mid.stable_key, event: "virada do meio", fn: "transição pesada", category: "whoosh-pesada", sync: "pico", gainDb: -11 });
-  const late = scenes[Math.max(0, scenes.length - 2)];
-  if (!m.some((x) => x.category === "whoosh-revelacao") && late) m.push({ t: Math.max(late.t0, late.t1 - 1.5), sceneKey: late.stable_key, event: "revelação do clímax", fn: "movimento crescente", category: "whoosh-revelacao", sync: "pico", gainDb: -9 });
+  // Garante as três funções do kit em momentos REAIS (inícios/fins de plano), sem sobrepor outro cue:
+  // dois efeitos no mesmo instante tornariam a medição de cada um ambígua.
+  const MIN_GAP = 3;
+  const free = (t: number) => m.every((x) => Math.abs(x.t - t) >= MIN_GAP);
+  const shotStarts = scenes.flatMap((sc) => (sc.data.shots as any[]).map((sh) => ({ t: sh.t0, sc }))).filter((x) => x.t >= 1);
+  const want: [string, string, string, number, (i: number, n: number) => boolean][] = [
+    ["whoosh-passagem", "virada com movimento", "passagem rápida", -10, (i, n) => i <= n / 2],
+    ["whoosh-pesada", "mudança de plano no meio da história", "transição pesada", -11, () => true],
+  ];
+  for (const [cat, ev, fn, g, pref] of want) {
+    if (m.some((x) => x.category === cat)) continue;
+    const c = shotStarts.find((x, i) => pref(i, shotStarts.length) && free(x.t)) ?? shotStarts.find((x) => free(x.t));
+    if (c) m.push({ t: c.t, sceneKey: c.sc.stable_key, event: ev, fn, category: cat, sync: "pico", gainDb: g });
+  }
+  if (!m.some((x) => x.category === "whoosh-revelacao")) {
+    const ends = scenes.flatMap((sc) => (sc.data.shots as any[]).map((sh) => ({ t: Math.max(sh.t0, sh.t1 - 1.0), sc }))).reverse();
+    const c = ends.find((x) => free(x.t));
+    if (c) m.push({ t: c.t, sceneKey: c.sc.stable_key, event: "revelação no fim de um plano", fn: "movimento crescente para revelação", category: "whoosh-revelacao", sync: "pico", gainDb: -9 });
+  }
+  // remove sobreposições remanescentes (mantém o primeiro; silêncio não conta)
+  const kept: Moment[] = [];
+  for (const x of m.sort((a, b) => a.t - b.t)) if (x.category === "silencio" || kept.every((k) => k.category === "silencio" || Math.abs(k.t - x.t) >= 1.5)) kept.push(x);
+  m.length = 0; m.push(...kept);
   return m.sort((a, b) => a.t - b.t);
 }
 

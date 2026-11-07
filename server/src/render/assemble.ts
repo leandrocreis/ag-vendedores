@@ -79,7 +79,7 @@ export async function mixAudio(projectId: string, m: Master, cues: SoundCue[], o
   // ganho: A mede e normaliza; B reutiliza o MESMO ganho de A (comparação justa, sem normalização separada)
   let gain = opts.gainFromA;
   if (gain == null) { const L = await measureLoudness(pre); gain = opts.lufs - L.integrated; }
-  r = await run("ffmpeg", ["-v", "error", "-y", "-i", pre, "-af", `volume=${gain.toFixed(2)}dB,alimiter=limit=${Math.pow(10, (opts.tp - 0.5) / 20).toFixed(4)}:attack=1:release=60:level=disabled:asc=1,aresample=48000`, "-c:a", "pcm_s24le", outWav]);
+  r = await run("ffmpeg", ["-v", "error", "-y", "-i", pre, "-af", `volume=${gain.toFixed(2)}dB,alimiter=limit=${Math.pow(10, (opts.tp - 1.0) / 20).toFixed(4)}:attack=1:release=60:level=disabled:asc=1,aresample=48000`, "-c:a", "pcm_s24le", outWav]);
   fs.rmSync(pre, { force: true });
   if (r.code !== 0) throw new Error("limitador falhou: " + r.stderr.slice(0, 300));
   return { gainDb: gain };
@@ -191,14 +191,14 @@ export async function measureCuePlacement(fileA: string, fileB: string, cues: So
   return cues.filter((c) => c.file).map((c) => {
     const target = c.targetTime + c.intentionalShiftMs / 1000;
     const i0 = Math.max(0, Math.floor((c.fileStart - 0.05) * SRm)), i1 = Math.min(A.length, Math.ceil((c.fileStart + c.duration + 0.05) * SRm));
-    const win = 32; // 2 ms
+    const win = 160; // 10 ms — MESMO envelope RMS usado para medir o ponto de sincronismo no arquivo (analyzeSound)
     let best = -1, bt = 0, onsetT: number | null = null, peakE = 0;
     const env: number[] = [];
     for (let i = i0; i + win < i1; i += win) { let e = 0; for (let k = i; k < i + win; k++) { const d = A[k] - B[k]; e += d * d; } env.push(e); if (e > best) { best = e; bt = (i + win / 2) / SRm; } }
     peakE = best;
     for (let k = 0; k < env.length; k++) if (env[k] > peakE * 0.1) { onsetT = (i0 + k * win) / SRm; break; }
     const measured = c.syncType === "pico" ? bt : c.syncType === "ataque" ? onsetT ?? bt : onsetT ?? bt;
-    return { id: c.id, frame: c.frame, targetTime: +target.toFixed(4), measuredTime: +measured.toFixed(4), deviationMs: +((measured - target) * 1000).toFixed(1), method: "envelope da diferença com/sem efeitos (janelas de 2 ms) no áudio AAC exportado", audible: best > 1e-6 };
+    return { id: c.id, frame: c.frame, targetTime: +target.toFixed(4), measuredTime: +measured.toFixed(4), deviationMs: +((measured - target) * 1000).toFixed(1), method: "envelope RMS de 10 ms da diferença com/sem efeitos no áudio AAC exportado (mesmo método da análise do arquivo; resolução ±5 ms)", audible: best > 1e-6 };
   });
 }
 
@@ -233,7 +233,7 @@ export async function reviewClips(projectId: string, exportId: string) {
     const wave = path.join(dir, `${p.name}_onda.png`);
     await run("ffmpeg", ["-v", "error", "-y", "-i", path.join(dir, name), "-filter_complex", "aformat=channel_layouts=mono,showwavespic=s=900x160:colors=0x7dd3fc", "-frames:v", "1", wave]);
     const still = path.join(dir, `${p.name}_quadro.jpg`);
-    await run("ffmpeg", ["-v", "error", "-y", "-ss", Math.min(dur - 0.05, p.t).toFixed(3), "-i", e.path, "-frames:v", "1", "-vf", "scale=480:-2", still]);
+    await run("ffmpeg", ["-v", "error", "-y", "-ss", Math.min(dur - 0.05, p.idx === 1 ? 1.2 : p.t).toFixed(3), "-i", e.path, "-frames:v", "1", "-vf", "scale=480:-2", still]);
     const L = await measureLoudness(path.join(dir, name));
     out.push({ ...p, t0, t1, file: name, abFile: `${p.name}_sem_efeitos.mp4`, wave: path.basename(wave), still: path.basename(still), loudness: L, cueFrame: p.cue?.frame ?? null, cueLicense: p.cue ? `${p.cue.license} — ${p.cue.source}` : null, cueId: p.cue?.id ?? null, missingCue: p.idx >= 2 && p.idx <= 4 && !p.cue });
   }

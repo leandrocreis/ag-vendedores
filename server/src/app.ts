@@ -7,7 +7,7 @@ import { z } from "zod";
 import { db, j, now, uid } from "./db.js";
 import { DATA_DIR, PROJECTS_DIR, SOUNDS_DIR, WEB_DIST, projectDir, safeJoin } from "./paths.js";
 import { ProjectSettings, ChannelProfile, ShotPlan } from "./contracts.js";
-import { UserError, sha256File } from "./util.js";
+import { UserError, sha256File, measureLoudness } from "./util.js";
 import { enqueue, getJob, listJobs, jobEvents, requestCancel, retryJob } from "./jobs.js";
 import { projectSteps } from "./steps.js";
 import { refreshCatalog, listStyles, getStyleVersion, styleHash, createVariant, AUTHORIAL_STYLE } from "./catalog/catalog.js";
@@ -134,6 +134,21 @@ export async function buildApp(opts: { port: number; devOrigins?: string[] }) {
   /* ---------------------------------- voz ---------------------------------- */
   app.get("/api/voz/motores", async () => Promise.all(Object.values(ENGINES).map(async (e) => ({ id: e.id, name: e.name, local: e.local, license: e.license, weightsLicense: e.weightsLicense, status: await e.status(), controls: await e.controls() }))));
   app.get("/api/voz/vozes", async (req) => engine(Q(req).engine ?? "kokoro").voices());
+  /** Amostra fora de projeto ("Ouvir com meu texto" no Estúdio de voz). Mede loudness para A/B com volume equivalente. */
+  app.post("/api/voz/amostra", async (req) => {
+    const b = B(req);
+    const text = String(b.text ?? "").slice(0, 400);
+    if (!text.trim()) throw new UserError("Digite um texto");
+    const dir = path.join(DATA_DIR, "cache", "amostras"); fs.mkdirSync(dir, { recursive: true });
+    const name = `amostra_${Date.now()}_${Math.random().toString(16).slice(2, 6)}.wav`;
+    const setting = b.setting;
+    let blend: any, instruction = setting.instruction;
+    if (setting.recipe?.length) { const tr = await translateRecipe(setting.engine, setting.recipe); blend = tr.blend; instruction = [instruction, tr.instruction].filter(Boolean).join(" ") || undefined; }
+    const r = await engine(setting.engine).speak({ text, voice: setting.voice, speed: setting.speed ?? 1, language: setting.language ?? "pt-br", instruction, blend }, path.join(dir, name));
+    const L = await measureLoudness(r.path);
+    return { url: `/api/voz/amostras/${name}`, duration: r.duration, engine: r.engine, controlsApplied: r.controlsApplied, loudness: L.integrated, setting };
+  });
+  app.get("/api/voz/amostras/:name", async (req, reply) => sendFile(reply, safeJoin(path.join(DATA_DIR, "cache", "amostras"), P(req).name), req));
   app.post("/api/voz/receita/traduzir", async (req) => translateRecipe(B(req).engine, B(req).parts));
   app.post("/api/projects/:id/voz/amostra", async (req) => { const r = await sampleVoice(pid(req), B(req).setting, B(req).text); return { ...r, url: `/api/projects/${P(req).id}/arquivo/${path.relative(projectDir(P(req).id), r.path)}` }; });
   app.get("/api/projects/:id/voz/elenco", async (req) => voiceCast(pid(req)));

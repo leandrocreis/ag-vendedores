@@ -53,7 +53,7 @@ export const HANDLERS: Record<string, Handler> = {
     const r = await buildMaster(pid, payload.scriptVersion, (p, l) => progress(0.85 + p * 0.15, l));
     return r;
   },
-  async segment_take({ job, payload }) { return synthSegment(job.project_id!, payload.segmentId, payload.override); },
+  async segment_take({ job, payload }) { return synthSegment(job.project_id!, payload.segmentId, payload.override, true); },
   async master_build({ job, payload, progress }) { return buildMaster(job.project_id!, payload.scriptVersion, (p, l) => progress(p, l)); },
   async align({ job, progress }) { return alignApproved(job.project_id!, (p, l) => progress(p, l)); },
   async storyboard({ job }) { return buildStoryboard(job.project_id!); },
