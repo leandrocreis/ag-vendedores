@@ -1,0 +1,431 @@
+{
+ "generatedAt": "2026-11-07T16:35:26.101Z",
+ "api": "https://api.openverse.org/v1/audio/",
+ "filters": {
+  "license": "cc0,by",
+  "length": "shortest,short",
+  "note": "category=sound_effect omitido: zerava os resultados"
+ },
+ "items": [
+  {
+   "local": "whoosh_01_passagem_rapida.mp3",
+   "role": "passagem",
+   "roleLabel": "Passagem rápida com ataque definido",
+   "selectionScore": 1.7655557899177388,
+   "sha256": "2c634c18f58e97f8be4685708e5f9eb60bd10cd084436e978e9b319570ae42fb",
+   "features": {
+    "duration": 0.49016666666666664,
+    "decodes": true,
+    "peakTime": 0.075,
+    "onsetTime": 0.03,
+    "attackMs": 40,
+    "peakDb": -5.188425551905409,
+    "lowRatio": 0.4758878176589754,
+    "peakPosition": 0.14583333333333334,
+    "rmsDb": -19.466207213872813,
+    "tailMs": 400
+   },
+   "query": "whoosh",
+   "isPreview": true,
+   "openverse": {
+    "id": "f1dc6045-7965-41de-87f8-4731d2583fd2",
+    "title": "Swosh swoosh whoosh air sound, free, high quality",
+    "indexed_on": "2024-05-21T15:00:07.873258Z",
+    "foreign_landing_url": "https://freesound.org/people/qubodup/sounds/60026",
+    "url": "https://cdn.freesound.org/previews/60/60026_71257-hq.mp3",
+    "creator": "qubodup",
+    "creator_url": "https://freesound.org/people/qubodup",
+    "license": "cc0",
+    "license_version": "1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "provider": "freesound",
+    "source": "freesound",
+    "category": null,
+    "genres": null,
+    "filesize": 13358,
+    "filetype": "mp3",
+    "tags": [
+     {
+      "name": "air",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "attack",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "bamboo",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "cut",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "domain",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "flup",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "h2",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "luft",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "public",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "public-domain",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "punch",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "stick",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "swash",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "swhish",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "swing",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "swish",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "swoosh",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "swosh",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "weapon",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "whip",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "whoosh",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "wind",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "wisch",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "wish",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "woosh",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "zoom",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "zoom-h2",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     }
+    ],
+    "alt_files": [
+     {
+      "url": "https://freesound.org/apiv2/sounds/60026/download/",
+      "bit_rate": 0,
+      "filesize": 85326,
+      "filetype": "flac",
+      "sample_rate": 44100
+     }
+    ],
+    "attribution": "\"Swosh swoosh whoosh air sound, free, high quality\" by qubodup is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+    "fields_matched": [],
+    "mature": false,
+    "audio_set": {
+     "title": "Free Whoosh Sound Pack",
+     "foreign_landing_url": "https://freesound.org/apiv2/packs/12143/",
+     "creator": "qubodup",
+     "creator_url": "https://freesound.org/people/qubodup/",
+     "url": null,
+     "filesize": null,
+     "filetype": null
+    },
+    "duration": 490,
+    "bit_rate": 128000,
+    "sample_rate": null,
+    "thumbnail": null,
+    "detail_url": "https://api.openverse.org/v1/audio/f1dc6045-7965-41de-87f8-4731d2583fd2/",
+    "related_url": "https://api.openverse.org/v1/audio/f1dc6045-7965-41de-87f8-4731d2583fd2/related/",
+    "waveform": "https://api.openverse.org/v1/audio/f1dc6045-7965-41de-87f8-4731d2583fd2/waveform/",
+    "unstable__sensitivity": []
+   }
+  },
+  {
+   "local": "whoosh_02_transicao_pesada.mp3",
+   "role": "pesada",
+   "roleLabel": "Transição grave/pesada",
+   "selectionScore": 3.1747578084090877,
+   "sha256": "8e4dccf0697f7faff1104e58a1b38ebdd692f26294e3a53649e73e4cf7e9801f",
+   "features": {
+    "duration": 3.1559375,
+    "decodes": true,
+    "peakTime": 0.635,
+    "onsetTime": 0.31,
+    "attackMs": 320,
+    "peakDb": -2.1081370502521604,
+    "lowRatio": 0.724919269469696,
+    "peakPosition": 0.20063694267515925,
+    "rmsDb": -21.611256401206276,
+    "tailMs": 1020
+   },
+   "query": "whoosh",
+   "isPreview": true,
+   "openverse": {
+    "id": "eab8a6e2-0ac8-4615-9e0d-ebde30523783",
+    "title": "Deep Whoosh #1",
+    "indexed_on": "2024-05-21T15:00:07.873258Z",
+    "foreign_landing_url": "https://freesound.org/people/Kinoton/sounds/351256",
+    "url": "https://cdn.freesound.org/previews/351/351256_2247456-hq.mp3",
+    "creator": "Kinoton",
+    "creator_url": "https://freesound.org/people/Kinoton",
+    "license": "cc0",
+    "license_version": "1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "provider": "freesound",
+    "source": "freesound",
+    "category": null,
+    "genres": null,
+    "filesize": 69196,
+    "filetype": "mp3",
+    "tags": [
+     {
+      "name": "air",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "sfx",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "sound-design",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "soundeffect",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "sweeping",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "swish",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "swoosh",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "swosh",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "transition",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "whoosh",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "wind",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     }
+    ],
+    "alt_files": [
+     {
+      "url": "https://freesound.org/apiv2/sounds/351256/download/",
+      "bit_rate": 0,
+      "filesize": 841236,
+      "filetype": "wav",
+      "sample_rate": 44100
+     }
+    ],
+    "attribution": "\"Deep Whoosh #1\" by Kinoton is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+    "fields_matched": [],
+    "mature": false,
+    "audio_set": {
+     "title": "Transitions",
+     "foreign_landing_url": "https://freesound.org/apiv2/packs/19970/",
+     "creator": "Kinoton",
+     "creator_url": "https://freesound.org/people/Kinoton/",
+     "url": null,
+     "filesize": null,
+     "filetype": null
+    },
+    "duration": 3155,
+    "bit_rate": 128000,
+    "sample_rate": null,
+    "thumbnail": null,
+    "detail_url": "https://api.openverse.org/v1/audio/eab8a6e2-0ac8-4615-9e0d-ebde30523783/",
+    "related_url": "https://api.openverse.org/v1/audio/eab8a6e2-0ac8-4615-9e0d-ebde30523783/related/",
+    "waveform": "https://api.openverse.org/v1/audio/eab8a6e2-0ac8-4615-9e0d-ebde30523783/waveform/",
+    "unstable__sensitivity": []
+   }
+  },
+  {
+   "local": "whoosh_03_crescente_revelacao.mp3",
+   "role": "revelacao",
+   "roleLabel": "Movimento crescente para revelação",
+   "selectionScore": 2.4036939313984167,
+   "sha256": "6e10a10d32b33081dd7a2f90d4590d5ba1223e2deaa9b3bc3b7084c81cb4fc12",
+   "features": {
+    "duration": 3.808,
+    "decodes": true,
+    "peakTime": 2.665,
+    "onsetTime": 0.77,
+    "attackMs": 1890,
+    "peakDb": -8.71480276780185,
+    "lowRatio": 0.5415160915094065,
+    "peakPosition": 0.7018469656992085,
+    "rmsDb": -27.58966833507957,
+    "tailMs": 510
+   },
+   "query": "whoosh",
+   "isPreview": true,
+   "openverse": {
+    "id": "2ea8108d-8f64-4966-952d-e233ae44904b",
+    "title": "Crunch whoosh 1.wav",
+    "indexed_on": "2024-05-21T15:00:07.873258Z",
+    "foreign_landing_url": "https://freesound.org/people/alexkandrell/sounds/170521",
+    "url": "https://cdn.freesound.org/previews/170/170521_1363668-hq.mp3",
+    "creator": "alexkandrell",
+    "creator_url": "https://freesound.org/people/alexkandrell",
+    "license": "by",
+    "license_version": "3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "provider": "freesound",
+    "source": "freesound",
+    "category": null,
+    "genres": null,
+    "filesize": 86064,
+    "filetype": "mp3",
+    "tags": [
+     {
+      "name": "Crunch",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "Metal",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "Trash",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     },
+     {
+      "name": "Whoosh",
+      "accuracy": null,
+      "unstable__provider": "freesound"
+     }
+    ],
+    "alt_files": [
+     {
+      "url": "https://freesound.org/apiv2/sounds/170521/download/",
+      "bit_rate": 0,
+      "filesize": 1097860,
+      "filetype": "wav",
+      "sample_rate": 48000
+     }
+    ],
+    "attribution": "\"Crunch whoosh 1.wav\" by alexkandrell is licensed under CC BY 3.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/3.0/.",
+    "fields_matched": [],
+    "mature": false,
+    "audio_set": {
+     "title": "Crunch Metal Trash Whoosh",
+     "foreign_landing_url": "https://freesound.org/apiv2/packs/10619/",
+     "creator": "alexkandrell",
+     "creator_url": "https://freesound.org/people/alexkandrell/",
+     "url": null,
+     "filesize": null,
+     "filetype": null
+    },
+    "duration": 3808,
+    "bit_rate": 128000,
+    "sample_rate": null,
+    "thumbnail": null,
+    "detail_url": "https://api.openverse.org/v1/audio/2ea8108d-8f64-4966-952d-e233ae44904b/",
+    "related_url": "https://api.openverse.org/v1/audio/2ea8108d-8f64-4966-952d-e233ae44904b/related/",
+    "waveform": "https://api.openverse.org/v1/audio/2ea8108d-8f64-4966-952d-e233ae44904b/waveform/",
+    "unstable__sensitivity": []
+   }
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+{
+  "verifiedAt": "2026-11-07",
+  "repos": [
+    { "name": "lemo-opuscar", "url": "https://github.com/lemomo-ai/lemo-opuscar.git", "commit": "5c05490cc55dfb54f8f4c333f0f0e79cb6500564", "license": "MIT (código) · CC BY 4.0 (demos/stills) · faixas de voz específicas excluídas", "role": "catálogo principal de estilos" },
+    { "name": "bang-motion", "url": "https://github.com/bangtutorial/bang-motion.git", "commit": "c1aa65e921c970d858705fcb4a53a8294d1a4131", "license": "MIT", "role": "linguagem de movimento" },
+    { "name": "vox-explainer-skill", "url": "https://github.com/CK42BB/vox-explainer-skill.git", "commit": "7003225dc3ed1dee9e2ef8b91b05b82c04691aa9", "license": "MIT", "role": "organização da produção (voz antes da animação)" },
+    { "name": "earshot", "url": "https://github.com/Leonxlnx/earshot.git", "commit": "4ac3d2ac2b151e1c23376f9ce7f3047a17050013", "license": "MIT", "role": "medição/escuta de áudio (opcional)" },
+    { "name": "motion-graphics", "url": "https://github.com/Barty-Bart/motion-graphics.git", "commit": "3d83d987d658601d8a1269eb691622bdcd427335", "license": "MIT (código) · sons CC0", "role": "skill sound-effects" },
+    { "name": "VoiceStudio", "url": "https://github.com/debpalash/VoiceStudio.git", "commit": "6c48a8e216a5be15a15da78536c971590b0d9e16", "license": "AGPL-3.0-only (app) · Apache-2.0 (omnivoice) · pesos com termos próprios", "role": "voz (API local)" },
+    { "name": "Open-Higgsfield-AI", "url": "https://github.com/Autom8AI/Open-Higgsfield-AI.git", "commit": "297151c245e35696e1519d66c40d09011167bb2d", "license": "README declara MIT; sem arquivo LICENSE no commit", "role": "referência de fluxos de geração (Muapi)" },
+    { "name": "youtube-agent-skill", "url": "https://github.com/Jakeschincariol/youtube-agent-skill.git", "commit": "a2feb2104981a375ffd4f87ee04f4f5344ac43c6", "license": "MIT", "role": "trabalho editorial do canal (11 skills)" }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "e-se-studio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "E Se? Studio — estúdio local de histórias hipotéticas animadas (áudio primeiro).",
+  "type": "module",
+  "workspaces": ["server", "web"],
+  "engines": { "node": ">=20.11" },
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "refs": "node scripts/fetch-refs.mjs",
+    "doctor": "npm -w server run doctor",
+    "build": "npm -w web run build && npm -w server run build",
+    "start": "node scripts/start.mjs",
+    "dev": "node scripts/start.mjs --dev",
+    "test": "npm -w server test",
+    "typecheck": "npm -w server run typecheck && npm -w web run typecheck"
+  }
+}

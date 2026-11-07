@@ -1,0 +1,63 @@
+﻿CRÉDITOS DOS SONS — E Se? Studio
+Gerado em 2026-11-07T16:35:26.101Z a partir da API oficial do Openverse.
+
+Arquivo local: whoosh_01_passagem_rapida.mp3
+Função: Passagem rápida com ataque definido
+Título original: Swosh swoosh whoosh air sound, free, high quality
+Autor: qubodup
+Link do autor: https://freesound.org/people/qubodup
+Provedor: freesound (fonte: freesound)
+ID Openverse: f1dc6045-7965-41de-87f8-4731d2583fd2
+Página Openverse: https://openverse.org/audio/f1dc6045-7965-41de-87f8-4731d2583fd2
+Link permanente da fonte: https://freesound.org/people/qubodup/sounds/60026
+URL de download: https://cdn.freesound.org/previews/60/60026_71257-hq.mp3
+Qualidade do arquivo: PRÉVIA disponibilizada pelo provedor (MP3 HQ do Freesound), não o original sem perdas; o original exige conta no Freesound
+Licença: CC0 1.0
+Link da licença: https://creativecommons.org/publicdomain/zero/1.0/
+Data de verificação: 2026-11-07 (registro Openverse consultado; confira também a página da fonte antes de publicar)
+Alterações: nenhuma no arquivo em sons/ (original preservado). Versões tratadas, se houver, ficam em sons/processados/ com vínculo a este arquivo.
+Medições locais: duração 0.49 s, ataque 40 ms, pico em 0.075 s (-5.2 dBFS), energia grave 48%
+Atribuição pronta: "Swosh swoosh whoosh air sound, free, high quality" por qubodup (freesound) — CC0 1.0 (atribuição não exigida; crédito voluntário).
+Observação: o catálogo não garante ausência de reivindicações de terceiros.
+
+------------------------------------------------------------
+
+Arquivo local: whoosh_02_transicao_pesada.mp3
+Função: Transição grave/pesada
+Título original: Deep Whoosh #1
+Autor: Kinoton
+Link do autor: https://freesound.org/people/Kinoton
+Provedor: freesound (fonte: freesound)
+ID Openverse: eab8a6e2-0ac8-4615-9e0d-ebde30523783
+Página Openverse: https://openverse.org/audio/eab8a6e2-0ac8-4615-9e0d-ebde30523783
+Link permanente da fonte: https://freesound.org/people/Kinoton/sounds/351256
+URL de download: https://cdn.freesound.org/previews/351/351256_2247456-hq.mp3
+Qualidade do arquivo: PRÉVIA disponibilizada pelo provedor (MP3 HQ do Freesound), não o original sem perdas; o original exige conta no Freesound
+Licença: CC0 1.0
+Link da licença: https://creativecommons.org/publicdomain/zero/1.0/
+Data de verificação: 2026-11-07 (registro Openverse consultado; confira também a página da fonte antes de publicar)
+Alterações: nenhuma no arquivo em sons/ (original preservado). Versões tratadas, se houver, ficam em sons/processados/ com vínculo a este arquivo.
+Medições locais: duração 3.16 s, ataque 320 ms, pico em 0.635 s (-2.1 dBFS), energia grave 72%
+Atribuição pronta: "Deep Whoosh #1" por Kinoton (freesound) — CC0 1.0 (atribuição não exigida; crédito voluntário).
+Observação: o catálogo não garante ausência de reivindicações de terceiros.
+
+------------------------------------------------------------
+
+Arquivo local: whoosh_03_crescente_revelacao.mp3
+Função: Movimento crescente para revelação
+Título original: Crunch whoosh 1.wav
+Autor: alexkandrell
+Link do autor: https://freesound.org/people/alexkandrell
+Provedor: freesound (fonte: freesound)
+ID Openverse: 2ea8108d-8f64-4966-952d-e233ae44904b
+Página Openverse: https://openverse.org/audio/2ea8108d-8f64-4966-952d-e233ae44904b
+Link permanente da fonte: https://freesound.org/people/alexkandrell/sounds/170521
+URL de download: https://cdn.freesound.org/previews/170/170521_1363668-hq.mp3
+Qualidade do arquivo: PRÉVIA disponibilizada pelo provedor (MP3 HQ do Freesound), não o original sem perdas; o original exige conta no Freesound
+Licença: CC BY 3.0
+Link da licença: https://creativecommons.org/licenses/by/3.0/
+Data de verificação: 2026-11-07 (registro Openverse consultado; confira também a página da fonte antes de publicar)
+Alterações: nenhuma no arquivo em sons/ (original preservado). Versões tratadas, se houver, ficam em sons/processados/ com vínculo a este arquivo.
+Medições locais: duração 3.81 s, ataque 1890 ms, pico em 2.665 s (-8.7 dBFS), energia grave 54%
+Atribuição pronta: "Crunch whoosh 1.wav" por alexkandrell — https://freesound.org/people/alexkandrell/sounds/170521 — licenciado sob CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/). Sem alterações no arquivo original.
+Observação: o catálogo não garante ausência de reivindicações de terceiros.

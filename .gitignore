@@ -1,0 +1,11 @@
+node_modules/
+dist/
+data/
+vendor/
+.venv/
+*.log
+.env
+web/dist/
+server/dist/
+python/__pycache__/
+sons/candidatos/

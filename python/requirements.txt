@@ -1,0 +1,6 @@
+# Motores locais (versões verificadas nesta implementação; travadas em requirements.lock.txt)
+kokoro-onnx==0.4.9
+soundfile
+faster-whisper==1.2.1
+huggingface_hub<1.0
+numpy

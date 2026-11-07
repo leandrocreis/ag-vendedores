@@ -1,0 +1,32 @@
+{
+  "name": "@e-se/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "doctor": "tsx src/cli/doctor.ts",
+    "serve": "tsx src/index.ts",
+    "worker": "tsx src/worker.ts",
+    "test": "node --import tsx --test --test-concurrency=1 test/*.test.ts",
+    "sons": "tsx src/cli/sons.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "1.6.0",
+    "@fastify/multipart": "9.4.0",
+    "@fastify/static": "8.3.0",
+    "@napi-rs/keyring": "2.1.2",
+    "better-sqlite3": "13.0.3",
+    "fastify": "5.12.8",
+    "openai": "7.53.0",
+    "playwright-core": "1.63.0",
+    "tsx": "4.23.15",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "9.6.0",
+    "@types/node": "26.6.6",
+    "typescript": "7.0.2"
+  }
+}
