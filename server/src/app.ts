@@ -34,7 +34,15 @@ export async function buildApp(opts: { port: number; devOrigins?: string[] }) {
   /* ------------------------ proteção da API local ------------------------ */
   const allowedHosts = new Set([`127.0.0.1:${opts.port}`, `localhost:${opts.port}`, `[::1]:${opts.port}`]);
   const allowedOrigins = new Set([`http://127.0.0.1:${opts.port}`, `http://localhost:${opts.port}`, ...(opts.devOrigins ?? [])]);
+  // Modo prévia (ESE_PREVIEW=1): só para visualizar a interface por um proxy de pré-visualização.
+  // Desliga a checagem de host/origem, mantém o cabeçalho anti-CSRF e BLOQUEIA o cadastro de chaves.
+  const preview = process.env.ESE_PREVIEW === "1";
   app.addHook("onRequest", async (req, reply) => {
+    if (preview) {
+      if (req.url.startsWith("/api/segredos")) return reply.code(403).send({ error: "Modo prévia: cadastro de chaves desativado. Rode o sistema no seu computador para configurar as chaves." });
+      if (req.url.startsWith("/api/") && !["GET", "HEAD"].includes(req.method) && req.headers["x-ese"] !== "1") return reply.code(403).send({ error: "Cabeçalho x-ese ausente (proteção CSRF)" });
+      return;
+    }
     const host = String(req.headers.host ?? "");
     if (!allowedHosts.has(host) && !(opts.devOrigins?.length && /^(127\.0\.0\.1|localhost):\d+$/.test(host))) return reply.code(403).send({ error: "Host não permitido (proteção contra DNS rebinding)" });
     const origin = req.headers.origin;
