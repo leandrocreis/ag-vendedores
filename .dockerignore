@@ -1,0 +1,8 @@
+node_modules
+data
+vendor
+.venv
+web/dist
+server/dist
+sons/candidatos
+.git

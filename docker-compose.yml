@@ -1,0 +1,25 @@
+# Servidor: docker compose up -d --build   (variáveis em .env — veja deploy/instalar.sh)
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment: { ESE_MODO: servidor }
+    volumes: [dados:/dados]
+    expose: ["4870"]
+  worker:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment: { ESE_MODO: servidor }
+    command: ["npx", "tsx", "server/src/worker.ts"]
+    volumes: [dados:/dados]
+    depends_on: [app]
+  caddy:
+    image: caddy:2.8.4
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    env_file: .env
+    volumes: [./deploy/Caddyfile:/etc/caddy/Caddyfile:ro, caddy_dados:/data, caddy_config:/config]
+    depends_on: [app]
+volumes: { dados: {}, caddy_dados: {}, caddy_config: {} }

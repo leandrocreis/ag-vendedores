@@ -4,6 +4,7 @@ async function req<T>(method: string, url: string, body?: unknown, form?: FormDa
   const r = await fetch(url, { method, headers: { ...(body !== undefined ? { "content-type": "application/json" } : {}), ...(method !== "GET" ? { "x-ese": "1" } : {}) }, body: form ?? (body !== undefined ? JSON.stringify(body) : undefined) });
   const text = await r.text();
   const data = text ? (() => { try { return JSON.parse(text); } catch { return text; } })() : null;
+  if (r.status === 401 && !url.endsWith("/api/login")) window.dispatchEvent(new Event("ese:login"));
   if (!r.ok) throw new ApiError((data as any)?.error ?? `HTTP ${r.status}`, r.status, (data as any)?.nextAction);
   return data as T;
 }

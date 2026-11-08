@@ -27,7 +27,7 @@ export interface TtsEngine {
 }
 
 /* ---------------------------------- Kokoro ---------------------------------- */
-const KOKORO_DIR = path.join(DATA_DIR, "modelos", "kokoro");
+const KOKORO_DIR = process.env.KOKORO_DIR ?? path.join(DATA_DIR, "modelos", "kokoro");
 const KOKORO_LANG: Record<string, { lang: string; label: string }> = {
   p: { lang: "pt-br", label: "Português (Brasil)" }, a: { lang: "en-us", label: "Inglês (EUA)" }, b: { lang: "en-gb", label: "Inglês (Reino Unido)" },
   e: { lang: "es", label: "Espanhol" }, f: { lang: "fr-fr", label: "Francês" }, i: { lang: "it", label: "Italiano" }, h: { lang: "hi", label: "Hindi" }, j: { lang: "ja", label: "Japonês" }, z: { lang: "cmn", label: "Chinês (mandarim)" },

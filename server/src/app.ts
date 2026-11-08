@@ -26,9 +26,10 @@ import { testAnthropic, listAnthropicModels } from "./providers/anthropic.js";
 import { testOpenAI, listImageModels, estimateImages, IMAGE_QUALITIES } from "./providers/openai-images.js";
 import { localStatus, runpodStatus, muapiStatus, planAiClips, VIDEO_LIMITS } from "./providers/video.js";
 import { doctor } from "./diagnostics.js";
+import { SERVER_MODE, initAuth, checkPassword, makeCookie, clearCookie, validSession, loginAllowed, registerFailure } from "./auth.js";
 
 export async function buildApp(opts: { port: number; devOrigins?: string[] }) {
-  const app = Fastify({ logger: false, bodyLimit: 20 * 1024 * 1024 });
+  const app = Fastify({ logger: false, bodyLimit: 20 * 1024 * 1024, trustProxy: process.env.ESE_MODO === "servidor" });
   await app.register(multipart, { limits: { fileSize: 500 * 1024 * 1024, files: 1 } });
 
   /* ------------------------ proteção da API local ------------------------ */
@@ -37,7 +38,28 @@ export async function buildApp(opts: { port: number; devOrigins?: string[] }) {
   // Modo prévia (ESE_PREVIEW=1): só para visualizar a interface por um proxy de pré-visualização.
   // Desliga a checagem de host/origem, mantém o cabeçalho anti-CSRF e BLOQUEIA o cadastro de chaves.
   const preview = process.env.ESE_PREVIEW === "1";
+  initAuth();
+  const domain = process.env.ESE_DOMINIO ?? "";
+  app.post("/api/login", async (req, reply) => {
+    if (!SERVER_MODE) return { ok: true, mode: "local" };
+    const ip = req.ip;
+    if (!loginAllowed(ip)) return reply.code(429).send({ error: "Muitas tentativas. Aguarde 15 minutos." });
+    if (!checkPassword((req.body as any)?.senha)) { registerFailure(ip); return reply.code(401).send({ error: "Senha incorreta" }); }
+    reply.header("set-cookie", makeCookie());
+    return { ok: true };
+  });
+  app.post("/api/logout", async (_req, reply) => { reply.header("set-cookie", clearCookie()); return { ok: true }; });
   app.addHook("onRequest", async (req, reply) => {
+    if (SERVER_MODE) {
+      // servidor: só o domínio configurado, via HTTPS (Caddy), com sessão válida
+      if (domain && String(req.headers.host ?? "") !== domain) return reply.code(403).send({ error: "Host não permitido" });
+      const origin = req.headers.origin;
+      if (origin && domain && origin !== `https://${domain}`) return reply.code(403).send({ error: "Origem não permitida" });
+      const isApi = req.url.startsWith("/api/");
+      if (isApi && req.url !== "/api/login" && req.url !== "/api/health" && !validSession(req.headers.cookie)) return reply.code(401).send({ error: "Faça login", nextAction: "Entrar" });
+      if (isApi && !["GET", "HEAD"].includes(req.method) && req.headers["x-ese"] !== "1") return reply.code(403).send({ error: "Cabeçalho x-ese ausente (proteção CSRF)" });
+      return;
+    }
     if (preview) {
       if (req.url.startsWith("/api/segredos")) return reply.code(403).send({ error: "Modo prévia: cadastro de chaves desativado. Rode o sistema no seu computador para configurar as chaves." });
       if (req.url.startsWith("/api/") && !["GET", "HEAD"].includes(req.method) && req.headers["x-ese"] !== "1") return reply.code(403).send({ error: "Cabeçalho x-ese ausente (proteção CSRF)" });
@@ -62,7 +84,7 @@ export async function buildApp(opts: { port: number; devOrigins?: string[] }) {
   const pid = (req: FastifyRequest) => { const id = P(req).id; getProject(id); return id as string; };
 
   /* --------------------------------- geral --------------------------------- */
-  app.get("/api/health", async () => ({ ok: true, at: now() }));
+  app.get("/api/health", async () => ({ ok: true, at: now(), mode: SERVER_MODE ? "servidor" : "local" }));
   app.get("/api/diagnostico", async () => doctor());
   app.get("/api/painel", async () => {
     const projects = db().prepare("SELECT id,title,kind,status,updated_at,is_demo FROM projects WHERE is_test=0 ORDER BY updated_at DESC LIMIT 12").all();

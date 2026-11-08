@@ -11,5 +11,6 @@ if (!count) {
   const r = await refreshCatalog();
   console.log(`[catálogo] ${r.added.length} estilos importados`);
 }
-await app.listen({ host: "127.0.0.1", port });
+// Modo servidor: escuta na rede interna do Docker; só o Caddy (HTTPS) é exposto.
+await app.listen({ host: process.env.ESE_MODO === "servidor" ? "0.0.0.0" : "127.0.0.1", port });
 console.log(`E Se? Studio em http://127.0.0.1:${port}`);
